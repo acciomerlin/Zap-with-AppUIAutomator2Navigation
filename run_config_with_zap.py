@@ -5,7 +5,6 @@ import time
 
 from stop_and_run_uiautomator import rerun_uiautomator2
 import subprocess
-import threading
 
 from zap import zap_api
 
@@ -56,7 +55,7 @@ def get_config_settings(config_file):
     return dic
 
 
-# 启动ZAP并在单独的线程中执行
+# 启动ZAP
 def start_zap_and_execute(pkgName, appName, config_settings, os_type):
     zap_client = zap_api.ZapApi()
     zap_client.start()
@@ -111,5 +110,5 @@ if __name__ == '__main__':
         pkgName, appName = pkgName_appName.split(' | ')
         appName = appName.strip('\'')
 
-        # 创建并启动新线程来执行ZAP和应用分析任务
+        # 启动ZAP
         start_zap_and_execute(pkgName, appName, config_settings, os_type)
