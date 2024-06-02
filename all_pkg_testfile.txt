@@ -28,3 +28,173 @@ com.mybank.android.phone | 网商银行
 com.tudou.android | 土豆视频
 com.xyn.wskai  | 微分身多开
 com.xunmeng.pinduoduo | 拼多多
+
+
+com.tencent.mm | 微信
+com.eg.android.AlipayGphone | 支付宝
+com.tencent.mobileqq | QQ
+com.baidu.searchbox | 百度
+com.taobao.taobao | 淘宝
+com.tencent.mtt | QQ浏览器
+com.tencent.qqlive | 腾讯视频
+com.jingdong.app.mall | 京东
+com.smile.gifmaker | 快手
+cn.wps.moffice_eng | WPS Office
+com.kuaishou.nebula | 快手极速版
+com.baidu.searchbox.tomas | 百度畅听版
+com.hunantv.imgo.activity | 芒果TV
+com.sina.weibo | 微博
+com.kugou.android | 酷狗音乐
+com.xingin.xhs | 小红书
+com.tencent.news | 腾讯新闻
+com.UCMobile | UC浏览器
+com.wuba | 58同城
+com.tencent.qqmusic | QQ音乐
+com.ss.android.article.video | 西瓜视频
+com.ximalaya.ting.android | 喜马拉雅
+com.achievo.vipshop | 唯品会
+com.taobao.litetao | 淘宝特价版
+tv.danmaku.bili | 哔哩哔哩
+com.ss.android.article.lite | 头条搜索极速版
+
+ctrip.android.view | 携程旅行
+com.dragon.read | 番茄免费小说
+com.tencent.androidqqmail | QQ邮箱
+com.tencent.wemeet.app | 腾讯会议
+com.taobao.idlefish | 闲鱼
+com.tencent.map | 腾讯地图
+com.dianping.v1 | 大众点评
+com.mt.mtxx.mtxx | 美图秀秀
+com.zhihu.android | 知乎
+com.tencent.karaoke | 全民k歌
+com.baidu.haokan | 好看视频
+cn.xuexi.android | 学习强国
+
+me.ele | 饿了么
+com.baidu.searchbox.lite | 百度极速版
+com.kmxs.reader | 七猫免费小说
+com.tmall.wireless | 手机天猫
+com.shizhuang.duapp | 得物
+com.sinovatech.unicom.ui | 中国联通
+com.tencent.android.qqdownloader | 应用宝
+com.sankuai.meituan | 美团
+com.youku.phone | 优酷
+com.greenpoint.android.mc10086.activity | 中国移动
+com.Qunar | 去哪儿旅行
+
+com.sina.weibo | 微博
+com.ximalaya.ting.android | 喜马拉雅
+com.kmxs.reader | 七猫免费小说
+com.Qunar | 去哪儿旅行
+com.zhihu.android | 知乎
+com.tencent.karaoke | 全民k歌
+com.baidu.haokan | 好看视频
+com.mt.mtxx.mtxx | 美图秀秀
+com.xingin.xhs | 小红书
+com.tencent.android.qqdownloader | 应用宝
+cn.wps.moffice_eng | WPS Office
+com.tencent.wemeet.app | 腾讯会议
+
+
+com.ss.android.ugc.aweme.lite | 抖音极速版
+com.le123.ysdq | 影视大全
+com.duowan.kiwi | 虎牙直播
+air.tv.douyu.android | 斗鱼
+com.duowan.mobile | YY
+com.sohu.sohuvideo | 搜狐视频
+com.huajiao | 花椒直播
+cn.cntv | 央视影音
+com.babycloud.hanju | 韩小圈
+com.tencent.weishi | 微视频
+
+com.kugou.fanxing | 酷狗直播
+com.happyteam.dubbingshow | 配音秀
+com.letv.android.client | 乐视视频
+
+com.ss.android.article.search | 有柿
+com.baidu.video | 百搜视频
+tv.acfundanmaku.video | AcFun
+com.taobao.live | 点淘
+com.wuba.zhuanzhuan | 转转
+com.fenqile.fenqile | 分期乐
+com.chinatelecom.bestpayclient | 翼支付
+com.xunmeng.pinduoduo | 拼多多
+com.hupu.shihuo | 识货
+com.cmcc.hebao | 和包
+com.pupumall.customer | 朴朴超市
+com.wudaokou.hippo | 盒马
+com.suning.mobile.ebuy | 苏宁易购
+com.rt.market.fresh | 大润发优鲜
+com.dangdang.buy2 | 当当
+com.juzifenqi.app | 桔多多
+
+
+com.einnovation.temu | Temu
+com.snapchat.android | Snapchat
+com.facebook.orca | Messenger
+com.lemon.lvoverseas | CapCut
+com.emojimaker.emojistitch | Emoji Stitch
+
+
+com.particlenews.newsbreak | News Break
+com.make.gif.pro | GIF Maker Pro
+com.ezt.pdfreader.pdfviewer | All PDF Reader
+com.alibaba.aliexpresshd | Ali Express
+com.indeed.android.jobsearch | Indeed找工作
+com.reddit.frontpage | Reddit
+com.pinterest | Pinterest
+com.discord | Discord
+com.spotify.music | Spotify
+com.facebook.lite | Lite
+com.twitter.android | XTwitter
+com.google.android.apps.translate | 翻译
+com.radio.pocketfm | Pocket FM
+com.roku.remote | Roku
+com.openai.chatgpt | ChatGPT
+
+tiktok-34-4-4 | TikTok
+com.zzkko_434_apps.evozi.com | SHEIN
+com.whatsapp_210915007_apps.evozi.com | WhatsApp Messenger
+com.instagram.android_292080186_apps.evozi.com | Instagram
+com.squareup.cash_3390300_apps.evozi.com | Cash App
+org.telegram.messenger_24327_apps.evozi.com | Telegram
+com.snapchat.android | Snapchat
+ | Messenger
+ | Threads, an Instagram app
+control-center-simple-1-0-8 | Control Center Simple
+com.facebook.katana_0_apps.evozi.com | Facebook
+com.lemon.lvoverseas_33004_apps.evozi.com | CapCut
+emoji-stitch-1-0-3 | Emoji Stitch
+com.particlenews.newsbreak_459_apps.evozi.com | NewsBreak
+com.twitter.android | X
+cn.danatech.xingseus | PictureThis
+com.ezt.pdfreader.pdfviewer | All PDF Reader
+com.zzkko | SHEIN
+com.emojimaker.emojistitch | Emoji Stitch
+com.tools.control.center.simplecontrol | Control Center Simple
+com.pinterest | Pinterest
+us.zoom.videomeetings | Zoom
+com.roku.remote | Roku
+com.reddit.frontpage | Reddit
+com.facebook.katana | Facebook
+com.hulu.plus | Hulu
+com.lemon.lvoverseas | CapCut
+com.facebook.lite | Lite
+com.instagram.android | Instagram
+com.einnovation.temu | Temu
+com.alibaba.aliexpresshd | aliexpresshd
+com.particlenews.newsbreak | NewsBreak
+com.spotify.music | Spotify
+com.gamma.scan | QR
+com.gamma.scan | QR
+com.life360.android.safetymapd | Life360
+com.google.android.apps.translate | Google Translate
+com.ubercab | Uber
+org.telegram.messenger | Telegram
+com.enflick.android.TextNow | TextNow
+com.facebook.orca | Messenger
+com.radio.pocketfm | Pocket FM
+com.snapchat.android | snapchat
+com.mcdonalds.app | McDonald's
+com.dd.doordash | DoorDash
+com.americasbestpics | America’s best pics and videos

@@ -59,7 +59,7 @@ class Config(object):
         self.run_type = "dfs"
 
         self.test_time = 7200  # 配置测试的时间,以秒为单位
-        self.sleep_time_sec = 0.5  # 配置点击之后睡眠的时间
+        self.sleep_time_sec = 0.2  # 配置点击之后睡眠的时间
         self.isSearchPrivacyPolicy = True # 配置是否寻找隐私政策
         # ScreenUid的表示方式
         self.ScreenUidRep = 'loc' # ex:[loc, textloc]

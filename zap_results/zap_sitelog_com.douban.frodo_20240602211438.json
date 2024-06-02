@@ -1,0 +1,2677 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.15.0",
+	"@generated": "\u5468\u65E5, 2 6\u6708 2024 21:14:38",
+	"site":[ 
+		{
+			"@name": "https://img2.doubanio.com",
+			"@host": "img2.doubanio.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "\u4F4E (\u9AD8)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img2.doubanio.com/view/group_topic/l/public/p652029271.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "81"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img2.doubanio.com/view/group_topic/l/public/p652029271.webp",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "81"
+				},
+				{
+					"pluginid": "10050",
+					"alertRef": "10050-2",
+					"alert": "Retrieved from Cache",
+					"name": "Retrieved from Cache",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+					"instances":[ 
+						{
+							"uri": "https://img2.doubanio.com/view/group_topic/l/public/p652029271.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 113173",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						}
+					],
+					"count": "1",
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+					"otherinfo": "<p>The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use.</p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>https://www.rfc-editor.org/rfc/rfc9110.html</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "81"
+				}
+			]
+		},
+		{
+			"@name": "https://erebor.douban.com",
+			"@host": "erebor.douban.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10010",
+					"alertRef": "10010",
+					"alert": "Cookie No HttpOnly Flag",
+					"name": "Cookie No HttpOnly Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.</p>",
+					"instances":[ 
+						{
+							"uri": "https://erebor.douban.com/stock/?stock_category=feed&stock_location=0&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://erebor.douban.com/frodo_bid/?unit=dale_feed_fifth_new&uid=&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that the HttpOnly flag is set for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
+					"cweid": "1004",
+					"wascid": "13",
+					"sourceid": "89"
+				},
+				{
+					"pluginid": "10011",
+					"alertRef": "10011",
+					"alert": "Cookie Without Secure Flag",
+					"name": "Cookie Without Secure Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the secure flag, which means that the cookie can be accessed via unencrypted connections.</p>",
+					"instances":[ 
+						{
+							"uri": "https://erebor.douban.com/stock/?stock_category=feed&stock_location=0&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://erebor.douban.com/frodo_bid/?unit=dale_feed_fifth_new&uid=&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p>",
+					"cweid": "614",
+					"wascid": "13",
+					"sourceid": "89"
+				},
+				{
+					"pluginid": "10054",
+					"alertRef": "10054-1",
+					"alert": "Cookie without SameSite Attribute",
+					"name": "Cookie without SameSite Attribute",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "https://erebor.douban.com/stock/?stock_category=feed&stock_location=0&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://erebor.douban.com/frodo_bid/?unit=dale_feed_fifth_new&uid=&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site</p>",
+					"cweid": "1275",
+					"wascid": "13",
+					"sourceid": "89"
+				},
+				{
+					"pluginid": "90033",
+					"alertRef": "90033",
+					"alert": "Loosely Scoped Cookie",
+					"name": "Loosely Scoped Cookie",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>Cookies can be scoped by domain or path. This check is only concerned with domain scope.The domain scope applied to a cookie determines which domains can access it. For example, a cookie can be scoped strictly to a subdomain e.g. www.nottrusted.com, or loosely scoped to a parent domain e.g. nottrusted.com. In the latter case, any subdomain of nottrusted.com can access the cookie. Loosely scoped cookies are common in mega-applications like google.com and live.com. Cookies set from a subdomain like app.foo.bar are transmitted only to that domain by the browser. However, cookies scoped to a parent-level domain may be transmitted to the parent, or any subdomain of the parent.</p>",
+					"instances":[ 
+						{
+							"uri": "https://erebor.douban.com/stock/?stock_category=feed&stock_location=0&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nerebor.douban.com\nbid=fcehLVfgPA0\n"
+						},
+						{
+							"uri": "https://erebor.douban.com/frodo_bid/?unit=dale_feed_fifth_new&uid=&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nerebor.douban.com\nbid=oGk0hSQzpRw\n"
+						}
+					],
+					"count": "2",
+					"solution": "<p>Always scope cookies to a FQDN (Fully Qualified Domain Name).</p>",
+					"otherinfo": "<p>The origin domain used for comparison was: </p><p>erebor.douban.com</p><p>bid=fcehLVfgPA0</p><p></p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc6265#section-4.1</p><p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p><p>https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_cookies</p>",
+					"cweid": "565",
+					"wascid": "15",
+					"sourceid": "89"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Re-examine Cache-control Directives",
+					"name": "Re-examine Cache-control Directives",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+					"instances":[ 
+						{
+							"uri": "https://erebor.douban.com/stock/?stock_category=feed&stock_location=0&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://erebor.douban.com/frodo_bid/?unit=dale_feed_fifth_new&uid=&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "89"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"name": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>\u7ED9\u5B9A\u7684\u54CD\u5E94\u5DF2\u88AB\u786E\u5B9A\u4E3A\u5305\u542B\u4F1A\u8BDD\u7BA1\u7406\u4EE4\u724C\u3002 \u201C\u5176\u4ED6\u4FE1\u606F\u201D\u5B57\u6BB5\u5305\u542B\u4E00\u7EC4\u53EF\u4EE5\u5728\u57FA\u4E8EHeader\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u4E2D\u4F7F\u7528\u7684Header\u4EE4\u724C\u3002 \u5982\u679C\u8BF7\u6C42\u662F\u5728\u5177\u6709\u201C\u81EA\u52A8\u68C0\u6D4B\u201D\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u7684\u4E0A\u4E0B\u6587\u4E2D\uFF0C\u5219\u6B64\u89C4\u5219\u5C06\u66F4\u6539\u4F1A\u8BDD\u7BA1\u7406\u4EE5\u4F7F\u7528\u5DF2\u786E\u5B9A\u7684\u4EE4\u724C\u3002</p>",
+					"instances":[ 
+						{
+							"uri": "https://erebor.douban.com/stock/?stock_category=feed&stock_location=0&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "fcehLVfgPA0",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://erebor.douban.com/frodo_bid/?unit=dale_feed_fifth_new&uid=&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "oGk0hSQzpRw",
+							"otherinfo": "\ncookie:bid"
+						}
+					],
+					"count": "2",
+					"solution": "<p>\u8FD9\u662F\u4E00\u4E2A\u4FE1\u606F\u63D0\u793A\u8B66\u62A5\u800C\u4E0D\u662F\u6F0F\u6D1E\uFF0C\u56E0\u6B64\u6CA1\u6709\u9700\u8981\u4FEE\u590D\u7684\u5730\u65B9\u3002</p>",
+					"otherinfo": "<p></p><p>cookie:bid</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "89"
+				}
+			]
+		},
+		{
+			"@name": "https://img9.doubanio.com",
+			"@host": "img9.doubanio.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "\u4F4E (\u9AD8)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img9.doubanio.com/view/group/sqxs/public/adcf9da25c21315.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://img9.doubanio.com/view/group_topic/l/public/p651997326.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://img9.doubanio.com/view/group_topic/l/public/p652029274.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "69"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img9.doubanio.com/view/group/sqxs/public/adcf9da25c21315.webp",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://img9.doubanio.com/view/group_topic/l/public/p651997326.webp",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://img9.doubanio.com/view/group_topic/l/public/p652029274.webp",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "69"
+				},
+				{
+					"pluginid": "10050",
+					"alertRef": "10050-2",
+					"alert": "Retrieved from Cache",
+					"name": "Retrieved from Cache",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+					"instances":[ 
+						{
+							"uri": "https://img9.doubanio.com/view/group/sqxs/public/adcf9da25c21315.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 4071870",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://img9.doubanio.com/view/group_topic/l/public/p651997326.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 192628",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://img9.doubanio.com/view/group_topic/l/public/p652029274.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 106044",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						}
+					],
+					"count": "3",
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+					"otherinfo": "<p>The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use.</p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>https://www.rfc-editor.org/rfc/rfc9110.html</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "69"
+				}
+			]
+		},
+		{
+			"@name": "https://img3.doubanio.com",
+			"@host": "img3.doubanio.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "\u4F4E (\u9AD8)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img3.doubanio.com/icon/up177211692-3.jpg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://img3.doubanio.com/view/group_topic/l/public/p652029277.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "45"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img3.doubanio.com/icon/up177211692-3.jpg",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://img3.doubanio.com/view/group_topic/l/public/p652029277.webp",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "45"
+				},
+				{
+					"pluginid": "10096",
+					"alertRef": "10096",
+					"alert": "\u65F6\u95F4\u6233\u6CC4\u6F0F - Unix",
+					"name": "\u65F6\u95F4\u6233\u6CC4\u6F0F - Unix",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "\u4F4E (\u4F4E)",
+					"desc": "<p>A timestamp was disclosed by the application/web server - Unix</p>",
+					"instances":[ 
+						{
+							"uri": "https://img3.doubanio.com/icon/up177211692-3.jpg",
+							"method": "GET",
+							"param": "Ali-Swift-Global-Savetime",
+							"attack": "",
+							"evidence": "1701408010",
+							"otherinfo": "1701408010, which evaluates to: 2023-12-01 13:20:10"
+						},
+						{
+							"uri": "https://img3.doubanio.com/view/group_topic/l/public/p652029277.webp",
+							"method": "GET",
+							"param": "Ali-Swift-Global-Savetime",
+							"attack": "",
+							"evidence": "1717226556",
+							"otherinfo": "1717226556, which evaluates to: 2024-06-01 15:22:36"
+						}
+					],
+					"count": "2",
+					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
+					"otherinfo": "<p>1701408010, which evaluates to: 2023-12-01 13:20:10</p>",
+					"reference": "<p>https://cwe.mitre.org/data/definitions/200.html</p>",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "45"
+				},
+				{
+					"pluginid": "10050",
+					"alertRef": "10050-1",
+					"alert": "Retrieved from Cache",
+					"name": "Retrieved from Cache",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+					"instances":[ 
+						{
+							"uri": "https://img3.doubanio.com/icon/up177211692-3.jpg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "HIT TCP_MEM_HIT dirn:-2:-2",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://img3.doubanio.com/view/group_topic/l/public/p652029277.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "HIT TCP_HIT dirn:11:319697370",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>https://www.rfc-editor.org/rfc/rfc9110.html</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "45"
+				}
+			]
+		},
+		{
+			"@name": "https://img1.doubanio.com",
+			"@host": "img1.doubanio.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10036",
+					"alertRef": "10036",
+					"alert": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+					"name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "\u4F4E (\u9AD8)",
+					"desc": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img1.doubanio.com/view/dale-online/dale_ad/public/ddbf785cb2b34eb.jpg?company_token=kX69T8w1wyOE-dale",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "marco/2.20",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://img1.doubanio.com/view/group/sqxs/public/7af52a04c44c949.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "marco/2.20",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://img1.doubanio.com/view/status/m/public/207627365-89b559cb79eb519.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "marco/2.20",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to suppress the \"Server\" header or provide generic details.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p><p>https://learn.microsoft.com/en-us/previous-versions/msp-n-p/ff648552(v=pandp.10)</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "47"
+				},
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "\u4F4E (\u9AD8)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img1.doubanio.com/view/dale-online/dale_ad/public/ddbf785cb2b34eb.jpg?company_token=kX69T8w1wyOE-dale",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://img1.doubanio.com/view/group/sqxs/public/7af52a04c44c949.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://img1.doubanio.com/view/status/m/public/207627365-89b559cb79eb519.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "47"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img1.doubanio.com/view/dale-online/dale_ad/public/ddbf785cb2b34eb.jpg?company_token=kX69T8w1wyOE-dale",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://img1.doubanio.com/view/group/sqxs/public/7af52a04c44c949.webp",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://img1.doubanio.com/view/status/m/public/207627365-89b559cb79eb519.webp",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "47"
+				},
+				{
+					"pluginid": "10096",
+					"alertRef": "10096",
+					"alert": "\u65F6\u95F4\u6233\u6CC4\u6F0F - Unix",
+					"name": "\u65F6\u95F4\u6233\u6CC4\u6F0F - Unix",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "\u4F4E (\u4F4E)",
+					"desc": "<p>A timestamp was disclosed by the application/web server - Unix</p>",
+					"instances":[ 
+						{
+							"uri": "https://img1.doubanio.com/view/dale-online/dale_ad/public/ddbf785cb2b34eb.jpg?company_token=kX69T8w1wyOE-dale",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1462899777",
+							"otherinfo": "1462899777, which evaluates to: 2016-05-11 01:02:57"
+						}
+					],
+					"count": "1",
+					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
+					"otherinfo": "<p>1462899777, which evaluates to: 2016-05-11 01:02:57</p>",
+					"reference": "<p>https://cwe.mitre.org/data/definitions/200.html</p>",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "47"
+				},
+				{
+					"pluginid": "10024",
+					"alertRef": "10024",
+					"alert": "Information Disclosure - Sensitive Information in URL",
+					"name": "Information Disclosure - Sensitive Information in URL",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>The request appeared to contain sensitive information leaked in the URL. This can violate PCI and most organizational compliance policies. You can configure the list of strings for this check to add or remove values specific to your environment.</p>",
+					"instances":[ 
+						{
+							"uri": "https://img1.doubanio.com/view/dale-online/dale_ad/public/ddbf785cb2b34eb.jpg?company_token=kX69T8w1wyOE-dale",
+							"method": "GET",
+							"param": "company_token",
+							"attack": "",
+							"evidence": "company_token",
+							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\ncompany_token"
+						}
+					],
+					"count": "1",
+					"solution": "<p>\u4E0D\u8981\u5728URIs\u4E2D\u4F20\u9012\u654F\u611F\u4FE1\u606F\u3002</p>",
+					"otherinfo": "<p>The URL contains potentially sensitive information. The following string was found via the pattern: token</p><p>company_token</p>",
+					"reference": "",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "47"
+				},
+				{
+					"pluginid": "10050",
+					"alertRef": "10050-2",
+					"alert": "Retrieved from Cache",
+					"name": "Retrieved from Cache",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+					"instances":[ 
+						{
+							"uri": "https://img1.doubanio.com/view/dale-online/dale_ad/public/ddbf785cb2b34eb.jpg?company_token=kX69T8w1wyOE-dale",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 366351",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://img1.doubanio.com/view/group/sqxs/public/7af52a04c44c949.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 1261883",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://img1.doubanio.com/view/status/m/public/207627365-89b559cb79eb519.webp",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 84092",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						}
+					],
+					"count": "3",
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+					"otherinfo": "<p>The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use.</p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>https://www.rfc-editor.org/rfc/rfc9110.html</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "47"
+				}
+			]
+		},
+		{
+			"@name": "https://artery.douban.com",
+			"@host": "artery.douban.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10010",
+					"alertRef": "10010",
+					"alert": "Cookie No HttpOnly Flag",
+					"name": "Cookie No HttpOnly Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.</p>",
+					"instances":[ 
+						{
+							"uri": "https://artery.douban.com/api/android_notification_status?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that the HttpOnly flag is set for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
+					"cweid": "1004",
+					"wascid": "13",
+					"sourceid": "30"
+				},
+				{
+					"pluginid": "10011",
+					"alertRef": "10011",
+					"alert": "Cookie Without Secure Flag",
+					"name": "Cookie Without Secure Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the secure flag, which means that the cookie can be accessed via unencrypted connections.</p>",
+					"instances":[ 
+						{
+							"uri": "https://artery.douban.com/api/android_notification_status?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p>",
+					"cweid": "614",
+					"wascid": "13",
+					"sourceid": "30"
+				},
+				{
+					"pluginid": "10054",
+					"alertRef": "10054-1",
+					"alert": "Cookie without SameSite Attribute",
+					"name": "Cookie without SameSite Attribute",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "https://artery.douban.com/api/android_notification_status?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site</p>",
+					"cweid": "1275",
+					"wascid": "13",
+					"sourceid": "30"
+				},
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "\u4F4E (\u9AD8)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://artery.douban.com/api/android_notification_status?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "30"
+				},
+				{
+					"pluginid": "90033",
+					"alertRef": "90033",
+					"alert": "Loosely Scoped Cookie",
+					"name": "Loosely Scoped Cookie",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>Cookies can be scoped by domain or path. This check is only concerned with domain scope.The domain scope applied to a cookie determines which domains can access it. For example, a cookie can be scoped strictly to a subdomain e.g. www.nottrusted.com, or loosely scoped to a parent domain e.g. nottrusted.com. In the latter case, any subdomain of nottrusted.com can access the cookie. Loosely scoped cookies are common in mega-applications like google.com and live.com. Cookies set from a subdomain like app.foo.bar are transmitted only to that domain by the browser. However, cookies scoped to a parent-level domain may be transmitted to the parent, or any subdomain of the parent.</p>",
+					"instances":[ 
+						{
+							"uri": "https://artery.douban.com/api/android_notification_status?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nartery.douban.com\nbid=XUc9PKguFpc\n"
+						}
+					],
+					"count": "1",
+					"solution": "<p>Always scope cookies to a FQDN (Fully Qualified Domain Name).</p>",
+					"otherinfo": "<p>The origin domain used for comparison was: </p><p>artery.douban.com</p><p>bid=XUc9PKguFpc</p><p></p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc6265#section-4.1</p><p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p><p>https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_cookies</p>",
+					"cweid": "565",
+					"wascid": "15",
+					"sourceid": "30"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Re-examine Cache-control Directives",
+					"name": "Re-examine Cache-control Directives",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+					"instances":[ 
+						{
+							"uri": "https://artery.douban.com/api/android_notification_status?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "30"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"name": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>\u7ED9\u5B9A\u7684\u54CD\u5E94\u5DF2\u88AB\u786E\u5B9A\u4E3A\u5305\u542B\u4F1A\u8BDD\u7BA1\u7406\u4EE4\u724C\u3002 \u201C\u5176\u4ED6\u4FE1\u606F\u201D\u5B57\u6BB5\u5305\u542B\u4E00\u7EC4\u53EF\u4EE5\u5728\u57FA\u4E8EHeader\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u4E2D\u4F7F\u7528\u7684Header\u4EE4\u724C\u3002 \u5982\u679C\u8BF7\u6C42\u662F\u5728\u5177\u6709\u201C\u81EA\u52A8\u68C0\u6D4B\u201D\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u7684\u4E0A\u4E0B\u6587\u4E2D\uFF0C\u5219\u6B64\u89C4\u5219\u5C06\u66F4\u6539\u4F1A\u8BDD\u7BA1\u7406\u4EE5\u4F7F\u7528\u5DF2\u786E\u5B9A\u7684\u4EE4\u724C\u3002</p>",
+					"instances":[ 
+						{
+							"uri": "https://artery.douban.com/api/android_notification_status?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "XUc9PKguFpc",
+							"otherinfo": "\ncookie:bid"
+						}
+					],
+					"count": "1",
+					"solution": "<p>\u8FD9\u662F\u4E00\u4E2A\u4FE1\u606F\u63D0\u793A\u8B66\u62A5\u800C\u4E0D\u662F\u6F0F\u6D1E\uFF0C\u56E0\u6B64\u6CA1\u6709\u9700\u8981\u4FEE\u590D\u7684\u5730\u65B9\u3002</p>",
+					"otherinfo": "<p></p><p>cookie:bid</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "30"
+				}
+			]
+		},
+		{
+			"@name": "https://amonsul.douban.com",
+			"@host": "amonsul.douban.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10038",
+					"alertRef": "10038-1",
+					"alert": "Content Security Policy (CSP) Header Not Set",
+					"name": "Content Security Policy (CSP) Header Not Set",
+					"riskcode": "2",
+					"confidence": "3",
+					"riskdesc": "\u4E2D (\u9AD8)",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "26"
+				},
+				{
+					"pluginid": "10020",
+					"alertRef": "10020-1",
+					"alert": "Missing Anti-clickjacking Header",
+					"name": "Missing Anti-clickjacking Header",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "\u4E2D (\u4E2D)",
+					"desc": "<p>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options to protect against 'ClickJacking' attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p>",
+					"cweid": "1021",
+					"wascid": "15",
+					"sourceid": "26"
+				},
+				{
+					"pluginid": "10098",
+					"alertRef": "10098",
+					"alert": "\u8DE8\u57DF\u914D\u7F6E\u9519\u8BEF",
+					"name": "\u8DE8\u57DF\u914D\u7F6E\u9519\u8BEF",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "\u4E2D (\u4E2D)",
+					"desc": "<p>Web browser data loading may be possible, due to a Cross Origin Resource Sharing (CORS) misconfiguration on the web server</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/check2?apikey=0dad551ec0f84ed02907ff5c42e8ec70&app_name=Frodo_Android&ltime=1717334280680&did=321a458d9127bf06c6c7f75bc22ecfe36aa81090&sdkVersion=1.5.9",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Access-Control-Allow-Origin: *",
+							"otherinfo": "The CORS misconfiguration on the web server permits cross-domain read requests from arbitrary third party domains, using unauthenticated APIs on this domain. Web browser implementations do not permit arbitrary third parties to read the response from authenticated APIs, however. This reduces the risk somewhat. This misconfiguration could be used by an attacker to access data that is available in an unauthenticated manner, but which uses some other form of security, such as IP address white-listing."
+						},
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "Access-Control-Allow-Origin: *",
+							"otherinfo": "The CORS misconfiguration on the web server permits cross-domain read requests from arbitrary third party domains, using unauthenticated APIs on this domain. Web browser implementations do not permit arbitrary third parties to read the response from authenticated APIs, however. This reduces the risk somewhat. This misconfiguration could be used by an attacker to access data that is available in an unauthenticated manner, but which uses some other form of security, such as IP address white-listing."
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).</p><p>Configure the \"Access-Control-Allow-Origin\" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.</p>",
+					"otherinfo": "<p>The CORS misconfiguration on the web server permits cross-domain read requests from arbitrary third party domains, using unauthenticated APIs on this domain. Web browser implementations do not permit arbitrary third parties to read the response from authenticated APIs, however. This reduces the risk somewhat. This misconfiguration could be used by an attacker to access data that is available in an unauthenticated manner, but which uses some other form of security, such as IP address white-listing.</p>",
+					"reference": "<p>https://vulncat.fortify.com/en/detail?id=desc.config.dotnet.html5_overly_permissive_cors_policy</p>",
+					"cweid": "264",
+					"wascid": "14",
+					"sourceid": "27"
+				},
+				{
+					"pluginid": "10010",
+					"alertRef": "10010",
+					"alert": "Cookie No HttpOnly Flag",
+					"name": "Cookie No HttpOnly Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/check2?apikey=0dad551ec0f84ed02907ff5c42e8ec70&app_name=Frodo_Android&ltime=1717334280680&did=321a458d9127bf06c6c7f75bc22ecfe36aa81090&sdkVersion=1.5.9",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that the HttpOnly flag is set for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
+					"cweid": "1004",
+					"wascid": "13",
+					"sourceid": "27"
+				},
+				{
+					"pluginid": "10011",
+					"alertRef": "10011",
+					"alert": "Cookie Without Secure Flag",
+					"name": "Cookie Without Secure Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the secure flag, which means that the cookie can be accessed via unencrypted connections.</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/check2?apikey=0dad551ec0f84ed02907ff5c42e8ec70&app_name=Frodo_Android&ltime=1717334280680&did=321a458d9127bf06c6c7f75bc22ecfe36aa81090&sdkVersion=1.5.9",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p>",
+					"cweid": "614",
+					"wascid": "13",
+					"sourceid": "27"
+				},
+				{
+					"pluginid": "10054",
+					"alertRef": "10054-1",
+					"alert": "Cookie without SameSite Attribute",
+					"name": "Cookie without SameSite Attribute",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/check2?apikey=0dad551ec0f84ed02907ff5c42e8ec70&app_name=Frodo_Android&ltime=1717334280680&did=321a458d9127bf06c6c7f75bc22ecfe36aa81090&sdkVersion=1.5.9",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site</p>",
+					"cweid": "1275",
+					"wascid": "13",
+					"sourceid": "27"
+				},
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "\u4F4E (\u9AD8)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/check2?apikey=0dad551ec0f84ed02907ff5c42e8ec70&app_name=Frodo_Android&ltime=1717334280680&did=321a458d9127bf06c6c7f75bc22ecfe36aa81090&sdkVersion=1.5.9",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "27"
+				},
+				{
+					"pluginid": "90033",
+					"alertRef": "90033",
+					"alert": "Loosely Scoped Cookie",
+					"name": "Loosely Scoped Cookie",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>Cookies can be scoped by domain or path. This check is only concerned with domain scope.The domain scope applied to a cookie determines which domains can access it. For example, a cookie can be scoped strictly to a subdomain e.g. www.nottrusted.com, or loosely scoped to a parent domain e.g. nottrusted.com. In the latter case, any subdomain of nottrusted.com can access the cookie. Loosely scoped cookies are common in mega-applications like google.com and live.com. Cookies set from a subdomain like app.foo.bar are transmitted only to that domain by the browser. However, cookies scoped to a parent-level domain may be transmitted to the parent, or any subdomain of the parent.</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/check2?apikey=0dad551ec0f84ed02907ff5c42e8ec70&app_name=Frodo_Android&ltime=1717334280680&did=321a458d9127bf06c6c7f75bc22ecfe36aa81090&sdkVersion=1.5.9",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \namonsul.douban.com\nbid=xIZoQZVAq3c\n"
+						},
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \namonsul.douban.com\nbid=asDZsEydkKc\n"
+						}
+					],
+					"count": "2",
+					"solution": "<p>Always scope cookies to a FQDN (Fully Qualified Domain Name).</p>",
+					"otherinfo": "<p>The origin domain used for comparison was: </p><p>amonsul.douban.com</p><p>bid=xIZoQZVAq3c</p><p></p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc6265#section-4.1</p><p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p><p>https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_cookies</p>",
+					"cweid": "565",
+					"wascid": "15",
+					"sourceid": "27"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Re-examine Cache-control Directives",
+					"name": "Re-examine Cache-control Directives",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "26"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"name": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>\u7ED9\u5B9A\u7684\u54CD\u5E94\u5DF2\u88AB\u786E\u5B9A\u4E3A\u5305\u542B\u4F1A\u8BDD\u7BA1\u7406\u4EE4\u724C\u3002 \u201C\u5176\u4ED6\u4FE1\u606F\u201D\u5B57\u6BB5\u5305\u542B\u4E00\u7EC4\u53EF\u4EE5\u5728\u57FA\u4E8EHeader\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u4E2D\u4F7F\u7528\u7684Header\u4EE4\u724C\u3002 \u5982\u679C\u8BF7\u6C42\u662F\u5728\u5177\u6709\u201C\u81EA\u52A8\u68C0\u6D4B\u201D\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u7684\u4E0A\u4E0B\u6587\u4E2D\uFF0C\u5219\u6B64\u89C4\u5219\u5C06\u66F4\u6539\u4F1A\u8BDD\u7BA1\u7406\u4EE5\u4F7F\u7528\u5DF2\u786E\u5B9A\u7684\u4EE4\u724C\u3002</p>",
+					"instances":[ 
+						{
+							"uri": "https://amonsul.douban.com/check2?apikey=0dad551ec0f84ed02907ff5c42e8ec70&app_name=Frodo_Android&ltime=1717334280680&did=321a458d9127bf06c6c7f75bc22ecfe36aa81090&sdkVersion=1.5.9",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "xIZoQZVAq3c",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://amonsul.douban.com/",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "asDZsEydkKc",
+							"otherinfo": "\ncookie:bid"
+						}
+					],
+					"count": "2",
+					"solution": "<p>\u8FD9\u662F\u4E00\u4E2A\u4FE1\u606F\u63D0\u793A\u8B66\u62A5\u800C\u4E0D\u662F\u6F0F\u6D1E\uFF0C\u56E0\u6B64\u6CA1\u6709\u9700\u8981\u4FEE\u590D\u7684\u5730\u65B9\u3002</p>",
+					"otherinfo": "<p></p><p>cookie:bid</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "27"
+				}
+			]
+		},
+		{
+			"@name": "https://frodo.douban.com",
+			"@host": "frodo.douban.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10062",
+					"alertRef": "10062",
+					"alert": "PII \u6CC4\u6F0F",
+					"name": "PII \u6CC4\u6F0F",
+					"riskcode": "3",
+					"confidence": "3",
+					"riskdesc": "\u9AD8 (\u9AD8)",
+					"desc": "<p>The response contains Personally Identifiable Information, such as CC number, SSN and similar sensitive data.</p>",
+					"instances":[ 
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "5294459350108785",
+							"otherinfo": "Credit Card Type detected: Mastercard\nBank Identification Number: 529445\nBrand: MASTERCARD\n\u7C7B\u522B\uFF1A \n\u53D1\u884C\u4EBA\uFF1A WIRECARD BANK AG"
+						}
+					],
+					"count": "1",
+					"solution": "<p>Check the response for the potential presence of personally identifiable information (PII), ensure nothing sensitive is leaked by the application.</p>",
+					"otherinfo": "<p>Credit Card Type detected: Mastercard</p><p>Bank Identification Number: 529445</p><p>Brand: MASTERCARD</p><p>\u7C7B\u522B\uFF1A </p><p>\u53D1\u884C\u4EBA\uFF1A WIRECARD BANK AG</p>",
+					"reference": "",
+					"cweid": "359",
+					"wascid": "13",
+					"sourceid": "63"
+				},
+				{
+					"pluginid": "10010",
+					"alertRef": "10010",
+					"alert": "Cookie No HttpOnly Flag",
+					"name": "Cookie No HttpOnly Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.</p>",
+					"instances":[ 
+						{
+							"uri": "https://frodo.douban.com/api/v2/android_beta_testing?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=34XvGdVzG4ltm184GcuN7voUIBA%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/home_tab_pos?last_visit_id=&last_tab_pos=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=5LwtAMKFjv29iAsV4F%2BtF3W7UAk%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "ll",
+							"attack": "",
+							"evidence": "Set-Cookie: ll",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/feature_switch?width=1440&height=3040&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=2TybwyqtpwSzNjlngAk6IP4CR0Y%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/group/user/clickbait_groups?force=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=ZrvM7tgJdWoCjoGYkogK%2BoKdsZc%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_ads?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=AMcMLV0bsBm5XsUP93ST1T6tSA8%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=1&tab=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=3&tab=follow&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/minstrel/story/home?count=15&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=zP2eQXj3ZTfbvCjGf3b%2BQn%2F16sE%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/frodo_rexxar/api/routes?timezone=Asia%2FShanghai&device_id=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&sugar=0&loc_id=108288&_sig=jC3f32YegRn4E8d8SwGv7Kxv0Cg%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/search/found_words?screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/update_agreement?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "14",
+					"solution": "<p>Ensure that the HttpOnly flag is set for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
+					"cweid": "1004",
+					"wascid": "13",
+					"sourceid": "39"
+				},
+				{
+					"pluginid": "10011",
+					"alertRef": "10011",
+					"alert": "Cookie Without Secure Flag",
+					"name": "Cookie Without Secure Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the secure flag, which means that the cookie can be accessed via unencrypted connections.</p>",
+					"instances":[ 
+						{
+							"uri": "https://frodo.douban.com/api/v2/android_beta_testing?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=34XvGdVzG4ltm184GcuN7voUIBA%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/home_tab_pos?last_visit_id=&last_tab_pos=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=5LwtAMKFjv29iAsV4F%2BtF3W7UAk%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "ll",
+							"attack": "",
+							"evidence": "Set-Cookie: ll",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/feature_switch?width=1440&height=3040&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=2TybwyqtpwSzNjlngAk6IP4CR0Y%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/group/user/clickbait_groups?force=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=ZrvM7tgJdWoCjoGYkogK%2BoKdsZc%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_ads?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=AMcMLV0bsBm5XsUP93ST1T6tSA8%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=1&tab=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=3&tab=follow&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/minstrel/story/home?count=15&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=zP2eQXj3ZTfbvCjGf3b%2BQn%2F16sE%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/frodo_rexxar/api/routes?timezone=Asia%2FShanghai&device_id=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&sugar=0&loc_id=108288&_sig=jC3f32YegRn4E8d8SwGv7Kxv0Cg%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/search/found_words?screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/update_agreement?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "14",
+					"solution": "<p>Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p>",
+					"cweid": "614",
+					"wascid": "13",
+					"sourceid": "39"
+				},
+				{
+					"pluginid": "10054",
+					"alertRef": "10054-1",
+					"alert": "Cookie without SameSite Attribute",
+					"name": "Cookie without SameSite Attribute",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "https://frodo.douban.com/api/v2/android_beta_testing?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=34XvGdVzG4ltm184GcuN7voUIBA%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/home_tab_pos?last_visit_id=&last_tab_pos=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=5LwtAMKFjv29iAsV4F%2BtF3W7UAk%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "ll",
+							"attack": "",
+							"evidence": "Set-Cookie: ll",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/feature_switch?width=1440&height=3040&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=2TybwyqtpwSzNjlngAk6IP4CR0Y%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/group/user/clickbait_groups?force=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=ZrvM7tgJdWoCjoGYkogK%2BoKdsZc%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_ads?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=AMcMLV0bsBm5XsUP93ST1T6tSA8%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=1&tab=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=3&tab=follow&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/minstrel/story/home?count=15&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=zP2eQXj3ZTfbvCjGf3b%2BQn%2F16sE%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/frodo_rexxar/api/routes?timezone=Asia%2FShanghai&device_id=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&sugar=0&loc_id=108288&_sig=jC3f32YegRn4E8d8SwGv7Kxv0Cg%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/search/found_words?screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/update_agreement?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "14",
+					"solution": "<p>Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site</p>",
+					"cweid": "1275",
+					"wascid": "13",
+					"sourceid": "39"
+				},
+				{
+					"pluginid": "10096",
+					"alertRef": "10096",
+					"alert": "\u65F6\u95F4\u6233\u6CC4\u6F0F - Unix",
+					"name": "\u65F6\u95F4\u6233\u6CC4\u6F0F - Unix",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "\u4F4E (\u4F4E)",
+					"desc": "<p>A timestamp was disclosed by the application/web server - Unix</p>",
+					"instances":[ 
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1654135950",
+							"otherinfo": "1654135950, which evaluates to: 2022-06-02 10:12:30"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1717334065",
+							"otherinfo": "1717334065, which evaluates to: 2024-06-02 21:14:25"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/feature_switch?width=1440&height=3040&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=2TybwyqtpwSzNjlngAk6IP4CR0Y%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1562815369",
+							"otherinfo": "1562815369, which evaluates to: 2019-07-11 11:22:49"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/feature_switch?width=1440&height=3040&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=2TybwyqtpwSzNjlngAk6IP4CR0Y%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1717129205",
+							"otherinfo": "1717129205, which evaluates to: 2024-05-31 12:20:05"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/minstrel/story/home?count=15&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=zP2eQXj3ZTfbvCjGf3b%2BQn%2F16sE%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1656578175",
+							"otherinfo": "1656578175, which evaluates to: 2022-06-30 16:36:15"
+						},
+						{
+							"uri": "https://frodo.douban.com/frodo_rexxar/api/routes?timezone=Asia%2FShanghai&device_id=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&sugar=0&loc_id=108288&_sig=jC3f32YegRn4E8d8SwGv7Kxv0Cg%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1459938524",
+							"otherinfo": "1459938524, which evaluates to: 2016-04-06 18:28:44"
+						}
+					],
+					"count": "6",
+					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
+					"otherinfo": "<p>1654135950, which evaluates to: 2022-06-02 10:12:30</p>",
+					"reference": "<p>https://cwe.mitre.org/data/definitions/200.html</p>",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "63"
+				},
+				{
+					"pluginid": "90033",
+					"alertRef": "90033",
+					"alert": "Loosely Scoped Cookie",
+					"name": "Loosely Scoped Cookie",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>Cookies can be scoped by domain or path. This check is only concerned with domain scope.The domain scope applied to a cookie determines which domains can access it. For example, a cookie can be scoped strictly to a subdomain e.g. www.nottrusted.com, or loosely scoped to a parent domain e.g. nottrusted.com. In the latter case, any subdomain of nottrusted.com can access the cookie. Loosely scoped cookies are common in mega-applications like google.com and live.com. Cookies set from a subdomain like app.foo.bar are transmitted only to that domain by the browser. However, cookies scoped to a parent-level domain may be transmitted to the parent, or any subdomain of the parent.</p>",
+					"instances":[ 
+						{
+							"uri": "https://frodo.douban.com/api/v2/android_beta_testing?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=34XvGdVzG4ltm184GcuN7voUIBA%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=kIQPvNQHvYE\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/home_tab_pos?last_visit_id=&last_tab_pos=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=5LwtAMKFjv29iAsV4F%2BtF3W7UAk%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=sbUwfjCiiHw\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nll=118281\nbid=bPMps1jL098\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=DRczss3Qq0Y\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/feature_switch?width=1440&height=3040&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=2TybwyqtpwSzNjlngAk6IP4CR0Y%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=bP0BbRJC114\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/group/user/clickbait_groups?force=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=ZrvM7tgJdWoCjoGYkogK%2BoKdsZc%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=k9pLur_rKd4\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_ads?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=AMcMLV0bsBm5XsUP93ST1T6tSA8%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=fmzBS6Jr5sU\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=1&tab=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=wq2zMiBviN0\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=3&tab=follow&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=sO51VBET-II\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/minstrel/story/home?count=15&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=zP2eQXj3ZTfbvCjGf3b%2BQn%2F16sE%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=bk0sw0ErJiQ\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/frodo_rexxar/api/routes?timezone=Asia%2FShanghai&device_id=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&sugar=0&loc_id=108288&_sig=jC3f32YegRn4E8d8SwGv7Kxv0Cg%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=Dfz-8-1yty4\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/search/found_words?screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=U1bf_mqfYKk\n"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/update_agreement?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \nfrodo.douban.com\nbid=HYz4wI9J5zc\n"
+						}
+					],
+					"count": "13",
+					"solution": "<p>Always scope cookies to a FQDN (Fully Qualified Domain Name).</p>",
+					"otherinfo": "<p>The origin domain used for comparison was: </p><p>frodo.douban.com</p><p>bid=kIQPvNQHvYE</p><p></p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc6265#section-4.1</p><p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p><p>https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_cookies</p>",
+					"cweid": "565",
+					"wascid": "15",
+					"sourceid": "39"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Re-examine Cache-control Directives",
+					"name": "Re-examine Cache-control Directives",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+					"instances":[ 
+						{
+							"uri": "https://frodo.douban.com/api/v2/android_beta_testing?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=34XvGdVzG4ltm184GcuN7voUIBA%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/home_tab_pos?last_visit_id=&last_tab_pos=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=5LwtAMKFjv29iAsV4F%2BtF3W7UAk%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/feature_switch?width=1440&height=3040&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=2TybwyqtpwSzNjlngAk6IP4CR0Y%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/group/user/clickbait_groups?force=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=ZrvM7tgJdWoCjoGYkogK%2BoKdsZc%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_ads?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=AMcMLV0bsBm5XsUP93ST1T6tSA8%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=1&tab=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=3&tab=follow&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/minstrel/story/home?count=15&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=zP2eQXj3ZTfbvCjGf3b%2BQn%2F16sE%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/frodo_rexxar/api/routes?timezone=Asia%2FShanghai&device_id=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&sugar=0&loc_id=108288&_sig=jC3f32YegRn4E8d8SwGv7Kxv0Cg%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/search/found_words?screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/update_agreement?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "must-revalidate, no-cache, private",
+							"otherinfo": ""
+						}
+					],
+					"count": "13",
+					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "39"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"name": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>\u7ED9\u5B9A\u7684\u54CD\u5E94\u5DF2\u88AB\u786E\u5B9A\u4E3A\u5305\u542B\u4F1A\u8BDD\u7BA1\u7406\u4EE4\u724C\u3002 \u201C\u5176\u4ED6\u4FE1\u606F\u201D\u5B57\u6BB5\u5305\u542B\u4E00\u7EC4\u53EF\u4EE5\u5728\u57FA\u4E8EHeader\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u4E2D\u4F7F\u7528\u7684Header\u4EE4\u724C\u3002 \u5982\u679C\u8BF7\u6C42\u662F\u5728\u5177\u6709\u201C\u81EA\u52A8\u68C0\u6D4B\u201D\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u7684\u4E0A\u4E0B\u6587\u4E2D\uFF0C\u5219\u6B64\u89C4\u5219\u5C06\u66F4\u6539\u4F1A\u8BDD\u7BA1\u7406\u4EE5\u4F7F\u7528\u5DF2\u786E\u5B9A\u7684\u4EE4\u724C\u3002</p>",
+					"instances":[ 
+						{
+							"uri": "https://frodo.douban.com/api/v2/android_beta_testing?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=34XvGdVzG4ltm184GcuN7voUIBA%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "kIQPvNQHvYE",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/home_tab_pos?last_visit_id=&last_tab_pos=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=5LwtAMKFjv29iAsV4F%2BtF3W7UAk%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "sbUwfjCiiHw",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/elendil/recommend_feed?start=0&count=20&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=oNIY04TS36lXHlw%2FNkX4ZnWaAAE%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "bPMps1jL098",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/erebor/feed_ad?unit=dale_feed_fifth_new&support_video=1&chicken=ddb980e5-14df-405c-8088-eb274b27f64f&fake_chicken=1cd75eda4564e11b5207ed5979ed574f&postback=%7B%22feed_slot_index%22%3A1%7D&need_blocked_cids=true&screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&abt_id=%7B%22165%22%3A%22C%22%2C%22163%22%3A%22D%22%2C%22161%22%3A%22A%22%2C%22112%22%3A%22A%22%7D&up_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F38613090%2Fstatus%2F4623592023%2F&up_title=&down_url=https%3A%2F%2Fwww.douban.com%2Fpeople%2F195270632%2Fstatus%2F4620670211%2F&down_title=&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=tkaNb%2FzvHSBjlYmzIuIUyxaPp0Y%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "DRczss3Qq0Y",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/feature_switch?width=1440&height=3040&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=2TybwyqtpwSzNjlngAk6IP4CR0Y%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "bP0BbRJC114",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/group/user/clickbait_groups?force=1&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=ZrvM7tgJdWoCjoGYkogK%2BoKdsZc%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "k9pLur_rKd4",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_ads?apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=AMcMLV0bsBm5XsUP93ST1T6tSA8%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "fmzBS6Jr5sU",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=1&tab=rec&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "wq2zMiBviN0",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/home_banner?count=3&tab=follow&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=VHHYjzWuWNiXMwT7TGjhMaOJZD4%3D&_ts=1717334286",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "sO51VBET-II",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/minstrel/story/home?count=15&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&timezone=Asia%2FShanghai&_sig=zP2eQXj3ZTfbvCjGf3b%2BQn%2F16sE%3D&_ts=1717334287",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "bk0sw0ErJiQ",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/frodo_rexxar/api/routes?timezone=Asia%2FShanghai&device_id=321a458d9127bf06c6c7f75bc22ecfe36aa81090&os_rom=android&udid=321a458d9127bf06c6c7f75bc22ecfe36aa81090&apikey=0dad551ec0f84ed02907ff5c42e8ec70&channel=Yingyongbao_Market&sugar=0&loc_id=108288&_sig=jC3f32YegRn4E8d8SwGv7Kxv0Cg%3D&_ts=1717334281",
+							"method": "GET",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Dfz-8-1yty4",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/search/found_words?screen_width=1440&boot_mark=fa41d860-5f85-4e93-a943-0433368af0c8%0A&screen_height=2984&wx_api_ver=671101235&opensdk_ver=638058496&sugar=0&update_mark=1717334280.569301276&network=wifi&enable_sdk_bidding=1&timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "U1bf_mqfYKk",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://frodo.douban.com/api/v2/update_agreement?timezone=Asia%2FShanghai",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "HYz4wI9J5zc",
+							"otherinfo": "\ncookie:bid"
+						}
+					],
+					"count": "13",
+					"solution": "<p>\u8FD9\u662F\u4E00\u4E2A\u4FE1\u606F\u63D0\u793A\u8B66\u62A5\u800C\u4E0D\u662F\u6F0F\u6D1E\uFF0C\u56E0\u6B64\u6CA1\u6709\u9700\u8981\u4FEE\u590D\u7684\u5730\u65B9\u3002</p>",
+					"otherinfo": "<p></p><p>cookie:bid</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "39"
+				}
+			]
+		},
+		{
+			"@name": "https://api.douban.com",
+			"@host": "api.douban.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10010",
+					"alertRef": "10010",
+					"alert": "Cookie No HttpOnly Flag",
+					"name": "Cookie No HttpOnly Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.</p>",
+					"instances":[ 
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_preload",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_show",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_statistics",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that the HttpOnly flag is set for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
+					"cweid": "1004",
+					"wascid": "13",
+					"sourceid": "33"
+				},
+				{
+					"pluginid": "10011",
+					"alertRef": "10011",
+					"alert": "Cookie Without Secure Flag",
+					"name": "Cookie Without Secure Flag",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the secure flag, which means that the cookie can be accessed via unencrypted connections.</p>",
+					"instances":[ 
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_preload",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_show",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_statistics",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p>",
+					"cweid": "614",
+					"wascid": "13",
+					"sourceid": "33"
+				},
+				{
+					"pluginid": "10054",
+					"alertRef": "10054-1",
+					"alert": "Cookie without SameSite Attribute",
+					"name": "Cookie without SameSite Attribute",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_preload",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_show",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_statistics",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Set-Cookie: bid",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site</p>",
+					"cweid": "1275",
+					"wascid": "13",
+					"sourceid": "33"
+				},
+				{
+					"pluginid": "10035",
+					"alertRef": "10035-1",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "\u4F4E (\u9AD8)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_preload",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_show",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_statistics",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "33"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_preload",
+							"method": "POST",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_show",
+							"method": "POST",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_statistics",
+							"method": "POST",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						}
+					],
+					"count": "3",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "33"
+				},
+				{
+					"pluginid": "90033",
+					"alertRef": "90033",
+					"alert": "Loosely Scoped Cookie",
+					"name": "Loosely Scoped Cookie",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>Cookies can be scoped by domain or path. This check is only concerned with domain scope.The domain scope applied to a cookie determines which domains can access it. For example, a cookie can be scoped strictly to a subdomain e.g. www.nottrusted.com, or loosely scoped to a parent domain e.g. nottrusted.com. In the latter case, any subdomain of nottrusted.com can access the cookie. Loosely scoped cookies are common in mega-applications like google.com and live.com. Cookies set from a subdomain like app.foo.bar are transmitted only to that domain by the browser. However, cookies scoped to a parent-level domain may be transmitted to the parent, or any subdomain of the parent.</p>",
+					"instances":[ 
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_preload",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \napi.douban.com\nbid=Odg2Z-NbNB4\n"
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_show",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \napi.douban.com\nbid=R1R_6cttOT4\n"
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_statistics",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "The origin domain used for comparison was: \napi.douban.com\nbid=yJvk5vJXNO8\n"
+						}
+					],
+					"count": "3",
+					"solution": "<p>Always scope cookies to a FQDN (Fully Qualified Domain Name).</p>",
+					"otherinfo": "<p>The origin domain used for comparison was: </p><p>api.douban.com</p><p>bid=Odg2Z-NbNB4</p><p></p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc6265#section-4.1</p><p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p><p>https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_cookies</p>",
+					"cweid": "565",
+					"wascid": "15",
+					"sourceid": "33"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Re-examine Cache-control Directives",
+					"name": "Re-examine Cache-control Directives",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4F4E)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+					"instances":[ 
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_preload",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_show",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_statistics",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "3",
+					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "33"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"name": "\u4F1A\u8BDD\u7BA1\u7406\u54CD\u5E94\u5DF2\u786E\u5B9A",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "\u4FE1\u606F\u63D0\u793A (\u4E2D)",
+					"desc": "<p>\u7ED9\u5B9A\u7684\u54CD\u5E94\u5DF2\u88AB\u786E\u5B9A\u4E3A\u5305\u542B\u4F1A\u8BDD\u7BA1\u7406\u4EE4\u724C\u3002 \u201C\u5176\u4ED6\u4FE1\u606F\u201D\u5B57\u6BB5\u5305\u542B\u4E00\u7EC4\u53EF\u4EE5\u5728\u57FA\u4E8EHeader\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u4E2D\u4F7F\u7528\u7684Header\u4EE4\u724C\u3002 \u5982\u679C\u8BF7\u6C42\u662F\u5728\u5177\u6709\u201C\u81EA\u52A8\u68C0\u6D4B\u201D\u7684\u4F1A\u8BDD\u7BA1\u7406\u65B9\u6CD5\u7684\u4E0A\u4E0B\u6587\u4E2D\uFF0C\u5219\u6B64\u89C4\u5219\u5C06\u66F4\u6539\u4F1A\u8BDD\u7BA1\u7406\u4EE5\u4F7F\u7528\u5DF2\u786E\u5B9A\u7684\u4EE4\u724C\u3002</p>",
+					"instances":[ 
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_preload",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "Odg2Z-NbNB4",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_show",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "R1R_6cttOT4",
+							"otherinfo": "\ncookie:bid"
+						},
+						{
+							"uri": "https://api.douban.com/v2/app_ads/splash_statistics",
+							"method": "POST",
+							"param": "bid",
+							"attack": "",
+							"evidence": "yJvk5vJXNO8",
+							"otherinfo": "\ncookie:bid"
+						}
+					],
+					"count": "3",
+					"solution": "<p>\u8FD9\u662F\u4E00\u4E2A\u4FE1\u606F\u63D0\u793A\u8B66\u62A5\u800C\u4E0D\u662F\u6F0F\u6D1E\uFF0C\u56E0\u6B64\u6CA1\u6709\u9700\u8981\u4FEE\u590D\u7684\u5730\u65B9\u3002</p>",
+					"otherinfo": "<p></p><p>cookie:bid</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "33"
+				}
+			]
+		},
+		{
+			"@name": "http://119.29.29.98",
+			"@host": "119.29.29.98",
+			"@port": "80",
+			"@ssl": "false",
+			"alerts": [ 
+				{
+					"pluginid": "10038",
+					"alertRef": "10038-1",
+					"alert": "Content Security Policy (CSP) Header Not Set",
+					"name": "Content Security Policy (CSP) Header Not Set",
+					"riskcode": "2",
+					"confidence": "3",
+					"riskdesc": "\u4E2D (\u9AD8)",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+					"instances":[ 
+						{
+							"uri": "http://119.29.29.98/d?dn=9b359c181424350298033f7795a4d65609cc14f8b5f46178&id=105&ttl=1",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "8"
+				},
+				{
+					"pluginid": "10020",
+					"alertRef": "10020-1",
+					"alert": "Missing Anti-clickjacking Header",
+					"name": "Missing Anti-clickjacking Header",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "\u4E2D (\u4E2D)",
+					"desc": "<p>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options to protect against 'ClickJacking' attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "http://119.29.29.98/d?dn=9b359c181424350298033f7795a4d65609cc14f8b5f46178&id=105&ttl=1",
+							"method": "GET",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p>",
+					"cweid": "1021",
+					"wascid": "15",
+					"sourceid": "8"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "\u4F4E (\u4E2D)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"uri": "http://119.29.29.98/d?dn=9b359c181424350298033f7795a4d65609cc14f8b5f46178&id=105&ttl=1",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "8"
+				}
+			]
+		},
+		{
+			"@name": "http://127.0.0.1:7912",
+			"@host": "127.0.0.1",
+			"@port": "7912",
+			"@ssl": "false",
+			"alerts": [ 
+			]
+		}
+	]
+}
