@@ -1,2 +1,6 @@
 com.alicloud.databox | 阿里云盘
+com.douban.frodo | 豆瓣
+com.taobao.idlefish | 闲鱼
+com.sankuai.meituan | 美团
+com.taobao.trip | 飞猪旅行
 com.daojia.jz.app. | 天鹅到家极速版
