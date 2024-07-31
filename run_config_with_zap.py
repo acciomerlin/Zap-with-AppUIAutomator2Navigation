@@ -87,6 +87,11 @@ def start_zap_and_execute(pkgName, appName, config_settings, os_type):
         print('error occurred, continue...')
         print(f'kill {pkgName} in exception...')
         execute_cmd_with_timeout(f'adb shell am force-stop {pkgName}')
+    except KeyboardInterrupt as e:
+        print(e)
+        print('error occurred, continue...')
+        print(f'kill {pkgName} in exception...')
+        execute_cmd_with_timeout(f'adb shell am force-stop {pkgName}')
     finally:
         # 停止ZAP并保存记录
         zap_client.stop_with_save(pkgName)

@@ -19,7 +19,7 @@ class ZapApi(object):
         subprocess.Popen([self.zap_path])
         # 等待 ZAP 完全启动并监听代理端口
         time.sleep(16)  # 根据你的系统调整这个时间
-        self.zap = ZAPv2(apikey=self.apikey)
+        self.zap = ZAPv2(apikey=self.apikey, proxies={'http': 'http://127.0.0.1:9999'})
 
     def stop_without_save(self):
         """

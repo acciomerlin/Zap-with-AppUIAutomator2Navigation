@@ -1,3 +1,2 @@
-com.taobao.taobao | 淘宝
-com.douban.frodo | 豆瓣
-com.taobao.idlefish | 闲鱼
+com.alicloud.databox | 阿里云盘
+com.daojia.jz.app. | 天鹅到家极速版
