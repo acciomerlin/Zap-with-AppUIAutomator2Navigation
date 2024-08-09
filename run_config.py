@@ -93,6 +93,8 @@ if __name__ == '__main__':
 
         except Exception as e:
             print(e)
+            # 打印详细的异常信息
+            traceback.print_exc()
             print('error occurred, continue...')
             print(f'kill {pkgName} in exception...')
             execute_cmd_with_timeout(f'adb shell am force-stop {pkgName}')

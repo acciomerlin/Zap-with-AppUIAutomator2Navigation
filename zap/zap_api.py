@@ -9,17 +9,17 @@ from datetime import datetime
 class ZapApi(object):
     def __init__(self):
         self.zap = None  # an instance of the ZAP api client.
-        self.zap_path = 'C:\\Program Files\\ZAP\\Zed Attack Proxy\\zap.bat'  # 换成自己的 ZAP 安装路径
-        self.apikey = 'nhocra6st486sshpdb54b2eopp'  # Change to match the API key set in ZAP, or use None if the API key is disabled
+        self.zap_path = r"C:\Program Files\ZAP\Zed Attack Proxy\zap.bat"  # 换成自己的 ZAP 安装路径
+        self.apikey = r'ig5oq0c6amjo4s62okbjl2nbfb'  # Change to match the API key set in ZAP, or use None if the API key is disabled
 
     def start(self):
         """
         启动 ZAP 应用程序
         """
-        subprocess.Popen([self.zap_path])
+        subprocess.Popen([self.zap_path], cwd=os.path.dirname(self.zap_path))
         # 等待 ZAP 完全启动并监听代理端口
-        time.sleep(16)  # 根据你的系统调整这个时间
-        self.zap = ZAPv2(apikey=self.apikey, proxies={'http': 'http://127.0.0.1:9999'})
+        time.sleep(12)  # 根据你的系统调整这个时间
+        self.zap = ZAPv2(apikey=self.apikey, proxies={'http': 'http://192.168.1.222:9999'})
 
     def stop_without_save(self):
         """
